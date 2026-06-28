@@ -1,28 +1,31 @@
-const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
-const bcrpyt = require('bcryptjs')
-const { validationResult } = require('express-validator')
+import { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import asyncHandler from 'express-async-handler'
+import User from '../models/userModel'
+import bcrypt from 'bcryptjs'
+import { validationResult } from 'express-validator'
+
+type AuthRequest = Request & { user?: any }
 
 // Register User
-const registerUser = asyncHandler(async (req, res, next) => {
+const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     const result = errors.array({ onlyFirstError: true })
     console.log(result[0].msg)
-    throw new Error(result[0].msg, 422)
+    res.status(422)
+    throw new Error(result[0].msg)
   }
 
   const { name, email, password } = req.body
-  console.log('it passed reg')
   const userExists = await User.findOne({ email })
   if (userExists) {
     res.status(400)
     throw new Error('User already exists')
   }
 
-  const salt = await bcrpyt.genSalt(10)
-  const hashedPassword = await bcrpyt.hash(password, salt)
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
 
   const user = await User.create({
     name,
@@ -34,6 +37,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     res.status(400)
     throw new Error('Invalid user data')
   }
+
   res.status(201).json({
     _id: user.id,
     name: user.name,
@@ -43,13 +47,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 })
 
 // Login User
-const loginUser = asyncHandler(async (req, res, next) => {
-  // const errors = validationResult(req)
-  //   if (!errors.isEmpty()) {
-  //     return next(
-  //       new Error('Invalid inputs passed, please check your data.', 422)
-  //     )
-  //   }
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
@@ -58,7 +56,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
     throw new Error('Could not find a user')
   }
 
-  if (await bcrpyt.compare(password, user.password)) {
+  if (await bcrypt.compare(password, user.password)) {
     res.json({
       _id: user.id,
       name: user.name,
@@ -72,20 +70,15 @@ const loginUser = asyncHandler(async (req, res, next) => {
 })
 
 // getMe
-const getMe = asyncHandler(async (req, res) => {
+const getMe = asyncHandler(async (req: AuthRequest, res: Response) => {
   res.status(200).json(req.user)
-  console.log('it passed getme')
 })
 
 // Generate Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (id: string) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET || '', {
     expiresIn: '30d',
   })
 }
 
-module.exports = {
-  registerUser,
-  loginUser,
-  getMe,
-}
+export { registerUser, loginUser, getMe }
