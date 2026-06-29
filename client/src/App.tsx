@@ -9,10 +9,9 @@ const App: FC = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path='/' element={<MovieList />}>
-          <Route path='login' />
-          <Route path='profile' />
-        </Route>
+        <Route path='/' element={<MovieList />} />
+        <Route path='/login' element={<div>Login</div>} />
+        <Route path='/profile' element={<div>Profile</div>} />
       </Routes>
     </BrowserRouter>
   )

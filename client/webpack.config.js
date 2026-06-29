@@ -20,7 +20,7 @@ module.exports = {
     static: {
       directory: path.resolve(__dirname, 'build'),
     },
-    port: 3000,
+    port: 3001,
     hot: true,
     compress: true,
     historyApiFallback: true,
@@ -38,7 +38,11 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+            presets: [
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'automatic' }],
+              '@babel/preset-typescript',
+            ],
           },
         },
       },

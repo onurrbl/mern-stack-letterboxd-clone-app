@@ -1,8 +1,32 @@
-nav {
-    border-bottom: 2px solid rgb(46, 46, 160);
-    margin-bottom: 3rem;
-    text-align: center;
-    justify-content: space-evenly;
-    padding: .5rem;
-    font-weight: 700;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #2e2ea0;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.navbar__brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar__links a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar__links a:hover {
+  color: #ffffff;
 }
