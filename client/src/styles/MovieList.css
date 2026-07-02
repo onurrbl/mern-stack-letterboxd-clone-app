@@ -1,14 +1,17 @@
 .movie-list {
-  width: 100%;
+  width: 70%;
   padding: 200px;
 border: 2rem solid red;
+display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .movie-list__body {
-border: 1rem solid red;
-
+border: 1rem solid rgb(0, 0, 0);
+    padding: 10rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
   width: 100%;
 }

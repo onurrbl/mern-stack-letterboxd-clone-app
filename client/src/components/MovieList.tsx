@@ -9,6 +9,11 @@ const MovieList: FC = () => {
       <MovieItem />
       <MovieItem />
       <MovieItem />
+      <MovieItem />
+      <MovieItem />
+      <MovieItem />
+
+     
     </section>
   )
 }
