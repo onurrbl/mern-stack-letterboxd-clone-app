@@ -11,6 +11,7 @@ module.exports = {
     filename: '[name][contenthash].js',
     clean: true,
     assetModuleFilename: '[name][ext]',
+      publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],

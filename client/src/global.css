@@ -42,3 +42,11 @@ svg {
 body {
   background-color: #EFEABB;
 }
+
+.page-container {
+  padding: 40px 20px;
+  background: white;
+  margin: 20px;
+  border-radius: 8px;
+  min-height: 500px;
+}
