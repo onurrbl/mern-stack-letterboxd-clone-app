@@ -5,10 +5,29 @@ import User from '../models/userModel'
 
 type AuthRequest = Request & { user?: any }
 
+const parseCategories = (value: any): string[] => {
+  if (!value) return []
+  if (Array.isArray(value)) return value.map(String)
+  return String(value)
+    .split(',')
+    .map((category) => category.trim())
+    .filter(Boolean)
+}
+
 // access public
 const getMovies = asyncHandler(async (req: Request, res: Response) => {
   const movies = await Movie.find({})
   res.json(movies)
+})
+
+// access public
+const getMovieById = asyncHandler(async (req: Request, res: Response) => {
+  const movie = await Movie.findById(req.params.id)
+  if (!movie) {
+    res.status(404)
+    throw new Error('Movie not found')
+  }
+  res.json(movie)
 })
 
 // access private
@@ -28,8 +47,10 @@ const addMovieToFavorite = asyncHandler(async (req: AuthRequest, res: Response) 
     throw new Error('Invalid movie data')
   }
 
-  user.favoriteMovies.push(movie._id)
-  await user.save()
+  if (!user.favoriteMovies.includes(movie._id)) {
+    user.favoriteMovies.push(movie._id)
+    await user.save()
+  }
 
   res.status(201).json({
     id: user._id,
@@ -77,13 +98,14 @@ const reviewMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
 // access private
 // admin only
 const addMovie = asyncHandler(async (req: Request, res: Response) => {
-  const { title, description, categories, year, rating } = req.body
+  const { title, description, categories, year, rating, thumbnail } = req.body
   const movie = await Movie.create({
     title,
     description,
-    categories,
+    categories: parseCategories(categories),
     year,
     rating,
+    thumbnail,
   })
 
   if (!movie) {
@@ -98,7 +120,8 @@ const addMovie = asyncHandler(async (req: Request, res: Response) => {
     categories: movie.categories,
     year: movie.year,
     rating: movie.rating,
+    thumbnail: movie.thumbnail,
   })
 })
 
-export { addMovie, getMovies, addMovieToFavorite, reviewMovie }
+export { addMovie, getMovies, getMovieById, addMovieToFavorite, reviewMovie }

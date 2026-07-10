@@ -28,3 +28,15 @@
 - Frontend source now uses TypeScript and `tsx` components.
 - Backend source now uses TypeScript and `ts` files.
 - Both `client` and `server` compile successfully.
+
+## Next steps
+
+- [ ] Finish auth flow and remove any old AuthContext code.
+- [ ] Build Movie model, controller, and movie routes on backend.
+- [ ] Add frontend movie Redux slice and connect home/movie detail pages.
+- [ ] Add reviews/ratings backend endpoints and protect them with auth.
+- [ ] Add review/rating UI to `DetailedMovie` page.
+- [ ] Add likes/favorites support on backend and frontend.
+- [ ] Polish routing, loading states, and profile page UX.
+
+See [TODO.md](TODO.md) for a shorter checklist.

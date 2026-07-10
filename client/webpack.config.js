@@ -1,7 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const BundleAnalyzerPlugin =
-  // require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: 'development',
@@ -11,7 +11,7 @@ module.exports = {
     filename: '[name][contenthash].js',
     clean: true,
     assetModuleFilename: '[name][ext]',
-      publicPath: '/',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
@@ -57,6 +57,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),
-  //   new BundleAnalyzerPlugin(),
+    //   new BundleAnalyzerPlugin(),
   ],
 }

@@ -18,10 +18,10 @@ const reviewSchema = new Schema<IReview>(
 )
 
 export interface IMovie extends Document {
-  title?: string
+  title: string
   categories: string[]
   thumbnail?: string
-  rating?: number
+  rating: number
   year?: number
   description?: string
   reviews: Types.DocumentArray<IReview>
@@ -29,19 +29,27 @@ export interface IMovie extends Document {
   updatedAt: Date
 }
 
-// Review post-save hook removed because the review document does not contain a direct movie reference.
-
-const movieSchema = new Schema<IMovie>({
-  title: {
-    type: String,
+const movieSchema = new Schema<IMovie>(
+  {
+    title: {
+      type: String,
+      required: [true, 'Please add a title'],
+    },
+    categories: {
+      type: [{ type: String }],
+      default: [],
+    },
+    thumbnail: { type: String },
+    rating: { type: Number, min: 0, max: 5, default: 0 },
+    year: { type: Number },
+    description: { type: String },
+    reviews: { type: [reviewSchema], default: [] },
   },
-  categories: [{ type: String }],
-  thumbnail: { type: String },
-  rating: { type: Number, min: 0, max: 5 },
-  year: { type: Number },
-  description: { type: String },
-  reviews: { type: [reviewSchema], default: [] },
-})
+  {
+    timestamps: true,
+  }
+)
+
 
 const Movie = mongoose.model<IMovie>('Movie', movieSchema)
 
