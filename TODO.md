@@ -2,7 +2,7 @@
 
 ## Short task list
 
-- [ ] Remove AuthContext leftovers (Redux auth is active)
+- [x] Remove AuthContext leftovers (Redux auth is active)
 - [ ] Verify login/signup works with backend
 - [ ] Protect `/profile` route with auth
 - [ ] Create Movie backend model and routes
