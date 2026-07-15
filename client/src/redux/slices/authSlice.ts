@@ -22,7 +22,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
 }
 
-const API_BASE = 'http://localhost:3000/api/users'
+const API_BASE = 'http://localhost:5001/api/users'
 
 // Async thunks
 export const signup = createAsyncThunk(

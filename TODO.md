@@ -3,7 +3,7 @@
 ## Short task list
 
 - [x] Remove AuthContext leftovers (Redux auth is active)
-- [ ] Verify login/signup works with backend
+- [x] Verify login/signup works with backend
 - [ ] Protect `/profile` route with auth
 - [ ] Create Movie backend model and routes
 - [ ] Add frontend movies Redux slice

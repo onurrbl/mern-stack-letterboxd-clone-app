@@ -31,7 +31,7 @@ const initialState: MoviesState = {
   error: null,
 }
 
-const API_BASE = 'http://localhost:3000/api/movies'
+const API_BASE = 'http://localhost:5001/api/movies'
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, { rejectWithValue }) => {
   try {

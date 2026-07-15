@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { errorHandler } from './middleware/errorMiddleware'
@@ -7,10 +8,15 @@ import userRoutes from './routes/userRoutes'
 
 dotenv.config()
 
-const port = process.env.PORT || '5000'
+const port = process.env.PORT || '5001'
 
 const app = express()
 
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

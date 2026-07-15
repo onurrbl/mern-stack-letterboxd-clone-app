@@ -48,6 +48,13 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
 // Login User
 const loginUser = asyncHandler(async (req: Request, res: Response) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const result = errors.array({ onlyFirstError: true })
+    res.status(422)
+    throw new Error(result[0].msg)
+  }
+
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
