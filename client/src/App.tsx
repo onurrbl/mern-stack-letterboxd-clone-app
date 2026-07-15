@@ -10,7 +10,7 @@ import Signup from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
-import { useAppDispatch } from './redux/hooks'
+import { useAppDispatch, useAuth } from './redux/hooks'
 import { loadUserFromStorage } from './redux/slices/authSlice'
 
 const Layout: FC = () => {
@@ -27,7 +27,19 @@ const MovieLayout: FC = () => {
 }
 
 const Profile: FC = () => {
-  return <div className="page-container"><h1>Profile</h1></div>
+  const { user } = useAuth()
+
+  return (
+    <div className="page-container">
+      <h1>Profile</h1>
+      {user && (
+        <div className="profile-details">
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+        </div>
+      )}
+    </div>
+  )
 }
 
 const AppRoutes: FC = () => {

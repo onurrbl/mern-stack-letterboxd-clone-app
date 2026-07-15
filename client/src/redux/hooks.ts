@@ -6,7 +6,9 @@ export const useAppSelector = (selector: (state: RootState) => any) => useSelect
 
 export const useAuth = () => {
   const dispatch = useAppDispatch()
-  const { user, token, loading, error, isAuthenticated } = useAppSelector((state) => state.auth)
+  const { user, token, loading, error, isAuthenticated, initialized } = useAppSelector(
+    (state) => state.auth
+  )
 
-  return { user, token, loading, error, isAuthenticated, dispatch }
+  return { user, token, loading, error, isAuthenticated, initialized, dispatch }
 }

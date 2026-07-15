@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAuth } from '../redux/hooks'
 import { login } from '../redux/slices/authSlice'
 import '../styles/Auth.css'
@@ -12,6 +12,9 @@ const Login: FC = () => {
   const dispatch = useAppDispatch()
   const { loading, error } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = (location.state as { from?: string } | null)?.from
+  const redirectTo = from && from !== '/login' ? from : '/'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,7 +23,7 @@ const Login: FC = () => {
     try {
       const result = await dispatch(login({ email, password }))
       if (result.meta.requestStatus === 'fulfilled') {
-        navigate('/')
+        navigate(redirectTo, { replace: true })
       }
     } catch (err) {
       setLocalError((err as Error).message)

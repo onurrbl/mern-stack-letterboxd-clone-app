@@ -12,14 +12,37 @@ interface AuthState {
   loading: boolean
   error: string | null
   isAuthenticated: boolean
+  initialized: boolean
+}
+
+const getStoredAuth = (): Pick<AuthState, 'user' | 'token' | 'isAuthenticated'> => {
+  try {
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    if (token && user) {
+      return {
+        token,
+        user: JSON.parse(user),
+        isAuthenticated: true,
+      }
+    }
+  } catch {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }
+
+  return {
+    user: null,
+    token: null,
+    isAuthenticated: false,
+  }
 }
 
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  ...getStoredAuth(),
   loading: false,
   error: null,
-  isAuthenticated: false,
+  initialized: false,
 }
 
 const API_BASE = 'http://localhost:5001/api/users'
@@ -91,13 +114,11 @@ const authSlice = createSlice({
       state.error = null
     },
     loadUserFromStorage: (state) => {
-      const token = localStorage.getItem('token')
-      const user = localStorage.getItem('user')
-      if (token && user) {
-        state.token = token
-        state.user = JSON.parse(user)
-        state.isAuthenticated = true
-      }
+      const stored = getStoredAuth()
+      state.token = stored.token
+      state.user = stored.user
+      state.isAuthenticated = stored.isAuthenticated
+      state.initialized = true
     },
     clearError: (state) => {
       state.error = null
