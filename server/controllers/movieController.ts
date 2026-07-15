@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
+import { validationResult } from 'express-validator'
 import Movie from '../models/movieModel'
 import User from '../models/userModel'
 
@@ -63,6 +64,13 @@ const addMovieToFavorite = asyncHandler(async (req: AuthRequest, res: Response) 
 // access private
 // require auth
 const reviewMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const result = errors.array({ onlyFirstError: true })
+    res.status(422)
+    throw new Error(result[0].msg)
+  }
+
   const { comment, rating } = req.body
   const movieId = req.params.id
 
@@ -97,7 +105,14 @@ const reviewMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
 
 // access private
 // admin only
-const addMovie = asyncHandler(async (req: Request, res: Response) => {
+const addMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const result = errors.array({ onlyFirstError: true })
+    res.status(422)
+    throw new Error(result[0].msg)
+  }
+
   const { title, description, categories, year, rating, thumbnail } = req.body
   const movie = await Movie.create({
     title,
