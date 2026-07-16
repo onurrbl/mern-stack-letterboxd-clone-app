@@ -2,13 +2,12 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import '../styles/DetailedMovie.css'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { useMovies } from '../redux/hooks'
 import { fetchMovieById, clearSelectedMovie } from '../redux/slices/movieSlice'
 
 const DetailedMovie: FC = () => {
   const { id } = useParams<{ id: string }>()
-  const dispatch = useAppDispatch()
-  const { selectedMovie, loading, error } = useAppSelector((state) => state.movies)
+  const { selectedMovie, detailLoading, error, dispatch } = useMovies()
 
   useEffect(() => {
     if (id) {
@@ -20,7 +19,7 @@ const DetailedMovie: FC = () => {
     }
   }, [dispatch, id])
 
-  if (loading) {
+  if (detailLoading) {
     return <div className='detailed-movie'>Loading movie...</div>
   }
 

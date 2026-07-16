@@ -12,3 +12,12 @@ export const useAuth = () => {
 
   return { user, token, loading, error, isAuthenticated, initialized, dispatch }
 }
+
+export const useMovies = () => {
+  const dispatch = useAppDispatch()
+  const { movies, selectedMovie, listLoading, detailLoading, error } = useAppSelector(
+    (state) => state.movies
+  )
+
+  return { movies, selectedMovie, listLoading, detailLoading, error, dispatch }
+}

@@ -1,13 +1,12 @@
 import type { FC } from 'react'
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { useMovies } from '../redux/hooks'
 import { fetchMovies, clearMoviesError } from '../redux/slices/movieSlice'
 import MovieItem from './MovieItem'
 import '../styles/MovieList.css'
 
 const MovieList: FC = () => {
-  const dispatch = useAppDispatch()
-  const { movies, loading, error } = useAppSelector((state) => state.movies)
+  const { movies, listLoading, error, dispatch } = useMovies()
 
   useEffect(() => {
     dispatch(fetchMovies())
@@ -17,7 +16,7 @@ const MovieList: FC = () => {
     }
   }, [dispatch])
 
-  if (loading) {
+  if (listLoading) {
     return <div className='movie-list__loading'>Loading movies...</div>
   }
 

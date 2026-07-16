@@ -2,32 +2,34 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 interface Review {
   user: string
-  comment: string
-  rating: number
+  comment?: string
+  rating?: number
 }
 
 export interface Movie {
   _id: string
   title: string
-  description: string
+  description?: string
   categories: string[]
-  year: number
+  year?: number
   rating: number
-  thumbnail: string
+  thumbnail?: string
   reviews?: Review[]
 }
 
 interface MoviesState {
   movies: Movie[]
   selectedMovie: Movie | null
-  loading: boolean
+  listLoading: boolean
+  detailLoading: boolean
   error: string | null
 }
 
 const initialState: MoviesState = {
   movies: [],
   selectedMovie: null,
-  loading: false,
+  listLoading: false,
+  detailLoading: false,
   error: null,
 }
 
@@ -76,27 +78,27 @@ const movieSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovies.pending, (state) => {
-        state.loading = true
+        state.listLoading = true
         state.error = null
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
-        state.loading = false
+        state.listLoading = false
         state.movies = action.payload
       })
       .addCase(fetchMovies.rejected, (state, action) => {
-        state.loading = false
+        state.listLoading = false
         state.error = action.payload as string
       })
       .addCase(fetchMovieById.pending, (state) => {
-        state.loading = true
+        state.detailLoading = true
         state.error = null
       })
       .addCase(fetchMovieById.fulfilled, (state, action) => {
-        state.loading = false
+        state.detailLoading = false
         state.selectedMovie = action.payload
       })
       .addCase(fetchMovieById.rejected, (state, action) => {
-        state.loading = false
+        state.detailLoading = false
         state.error = action.payload as string
       })
   },
