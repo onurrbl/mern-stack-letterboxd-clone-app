@@ -1,9 +1,46 @@
 .detailed-movie {
-    margin-top: 3rem;
+  margin-top: 3rem;
   width: 100%;
   padding: 40px 20px;
   background: linear-gradient(135deg, #EFEABB 0%, #f5f0c3 100%);
   min-height: 100vh;
+}
+
+.detailed-movie__status {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 8px;
+  color: #4b5563;
+}
+
+.detailed-movie__status--error p {
+  margin-bottom: 1rem;
+  color: #b91c1c;
+}
+
+.detailed-movie__status button,
+.detailed-movie__status a {
+  display: inline-block;
+  margin: 0.35rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detailed-movie__status button {
+  border: none;
+  background: #2e2ea0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.detailed-movie__status a {
+  background: #e5e7eb;
+  color: #1f2937;
 }
 
 .detailed-movie h1 {

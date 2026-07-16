@@ -15,9 +15,22 @@ export const useAuth = () => {
 
 export const useMovies = () => {
   const dispatch = useAppDispatch()
-  const { movies, selectedMovie, listLoading, detailLoading, error } = useAppSelector(
-    (state) => state.movies
-  )
+  const {
+    movies,
+    selectedMovie,
+    listLoading,
+    detailLoading,
+    listError,
+    detailError,
+  } = useAppSelector((state) => state.movies)
 
-  return { movies, selectedMovie, listLoading, detailLoading, error, dispatch }
+  return {
+    movies,
+    selectedMovie,
+    listLoading,
+    detailLoading,
+    listError,
+    detailError,
+    dispatch,
+  }
 }

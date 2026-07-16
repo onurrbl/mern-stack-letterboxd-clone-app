@@ -1,31 +1,42 @@
-.movie-list {
-  width: 70%;
-  padding: 200px;
-border: 2rem solid red;
-display: flex;
-    flex-direction: column;
-    align-items: center;
+.movie-list__body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
 }
 
-.movie-list__body {
-border: 1rem solid rgb(0, 0, 0);
-    padding: 10rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-  width: 100%;
+.movie-list__status {
+  padding: 2rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 8px;
+  color: #4b5563;
+}
+
+.movie-list__status--error p {
+  margin-bottom: 1rem;
+  color: #b91c1c;
+}
+
+.movie-list__status button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2e2ea0;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
   .movie-list__body {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .movie-list__body {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 }

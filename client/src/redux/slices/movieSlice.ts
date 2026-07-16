@@ -22,7 +22,8 @@ interface MoviesState {
   selectedMovie: Movie | null
   listLoading: boolean
   detailLoading: boolean
-  error: string | null
+  listError: string | null
+  detailError: string | null
 }
 
 const initialState: MoviesState = {
@@ -30,7 +31,8 @@ const initialState: MoviesState = {
   selectedMovie: null,
   listLoading: false,
   detailLoading: false,
-  error: null,
+  listError: null,
+  detailError: null,
 }
 
 const API_BASE = 'http://localhost:5001/api/movies'
@@ -68,8 +70,11 @@ const movieSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    clearMoviesError: (state) => {
-      state.error = null
+    clearListError: (state) => {
+      state.listError = null
+    },
+    clearDetailError: (state) => {
+      state.detailError = null
     },
     clearSelectedMovie: (state) => {
       state.selectedMovie = null
@@ -79,7 +84,7 @@ const movieSlice = createSlice({
     builder
       .addCase(fetchMovies.pending, (state) => {
         state.listLoading = true
-        state.error = null
+        state.listError = null
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.listLoading = false
@@ -87,11 +92,12 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.listLoading = false
-        state.error = action.payload as string
+        state.listError = action.payload as string
       })
       .addCase(fetchMovieById.pending, (state) => {
         state.detailLoading = true
-        state.error = null
+        state.detailError = null
+        state.selectedMovie = null
       })
       .addCase(fetchMovieById.fulfilled, (state, action) => {
         state.detailLoading = false
@@ -99,10 +105,10 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovieById.rejected, (state, action) => {
         state.detailLoading = false
-        state.error = action.payload as string
+        state.detailError = action.payload as string
       })
   },
 })
 
-export const { clearMoviesError, clearSelectedMovie } = movieSlice.actions
+export const { clearListError, clearDetailError, clearSelectedMovie } = movieSlice.actions
 export default movieSlice.reducer

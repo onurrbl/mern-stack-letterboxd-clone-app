@@ -1,31 +1,38 @@
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useMovies } from '../redux/hooks'
-import { fetchMovies, clearMoviesError } from '../redux/slices/movieSlice'
+import { fetchMovies, clearListError } from '../redux/slices/movieSlice'
 import MovieItem from './MovieItem'
 import '../styles/MovieList.css'
 
 const MovieList: FC = () => {
-  const { movies, listLoading, error, dispatch } = useMovies()
+  const { movies, listLoading, listError, dispatch } = useMovies()
 
   useEffect(() => {
     dispatch(fetchMovies())
 
     return () => {
-      dispatch(clearMoviesError())
+      dispatch(clearListError())
     }
   }, [dispatch])
 
   if (listLoading) {
-    return <div className='movie-list__loading'>Loading movies...</div>
+    return <div className='movie-list__status'>Loading movies...</div>
   }
 
-  if (error) {
-    return <div className='movie-list__error'>{error}</div>
+  if (listError) {
+    return (
+      <div className='movie-list__status movie-list__status--error'>
+        <p>{listError}</p>
+        <button type='button' onClick={() => dispatch(fetchMovies())}>
+          Try again
+        </button>
+      </div>
+    )
   }
 
   if (!movies.length) {
-    return <div className='movie-list__empty'>No movies available.</div>
+    return <div className='movie-list__status'>No movies available yet.</div>
   }
 
   return (

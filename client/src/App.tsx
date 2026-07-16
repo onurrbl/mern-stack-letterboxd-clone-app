@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 import './global.css'
 import Navbar from './components/Navbar'
-import MovieList from './components/MovieList'
+import Home from './pages/Home'
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import DetailedMovie from './pages/DetailedMovie'
 import Login from './pages/Login'
@@ -53,7 +53,7 @@ const AppRoutes: FC = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path='/' element={<MovieList />} />
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route 
@@ -66,7 +66,7 @@ const AppRoutes: FC = () => {
         />
 
         <Route path='/movie' element={<MovieLayout />}>
-          <Route index element={<MovieList />} />
+          <Route index element={<Home />} />
           <Route path=':id' element={<DetailedMovie />} />
         </Route>
       </Route>
