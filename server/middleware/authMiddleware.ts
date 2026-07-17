@@ -35,4 +35,13 @@ const requireAuth = asyncHandler(async (req: AuthRequest, res: Response, next: N
   }
 })
 
-export { requireAuth }
+const requireAdmin = asyncHandler(async (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (!req.user?.isAdmin) {
+    res.status(403)
+    throw new Error('Not authorized as admin')
+  }
+
+  next()
+})
+
+export { requireAuth, requireAdmin }

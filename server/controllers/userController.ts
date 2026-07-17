@@ -7,6 +7,9 @@ import { validationResult } from 'express-validator'
 
 type AuthRequest = Request & { user?: any }
 
+const isAdminEmail = (email: string) =>
+  process.env.ADMIN_EMAIL?.toLowerCase() === email.toLowerCase()
+
 // Register User
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const errors = validationResult(req)
@@ -31,6 +34,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     name,
     email,
     password: hashedPassword,
+    isAdmin: isAdminEmail(email),
   })
 
   if (!user) {
@@ -42,6 +46,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     _id: user.id,
     name: user.name,
     email: user.email,
+    isAdmin: user.isAdmin,
     token: generateToken(user._id),
   })
 })
@@ -68,6 +73,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
   } else {

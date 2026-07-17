@@ -4,6 +4,7 @@ export interface IUser extends Document {
   name: string
   email: string
   password: string
+  isAdmin: boolean
   favoriteMovies: Types.ObjectId[]
   createdAt: Date
   updatedAt: Date
@@ -23,6 +24,10 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, 'Please add a password'],
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     favoriteMovies: [{ type: Schema.Types.ObjectId, ref: 'Movie' }],
   },
