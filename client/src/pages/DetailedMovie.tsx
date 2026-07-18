@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useMovies } from '../redux/hooks'
 import { fetchMovieById, clearSelectedMovie, clearDetailError } from '../redux/slices/movieSlice'
+import ReviewSection from '../components/ReviewSection'
 import '../styles/DetailedMovie.css'
 
 const DetailedMovie: FC = () => {
@@ -103,10 +104,11 @@ const DetailedMovie: FC = () => {
         </div>
 
         <div className='movie__end'>
-          <div className='user-activiy-bar'></div>
           <div className='movie-ratings'>Rating: {selectedMovie.rating.toFixed(1)}</div>
         </div>
       </div>
+
+      <ReviewSection movieId={selectedMovie._id} />
     </div>
   )
 }

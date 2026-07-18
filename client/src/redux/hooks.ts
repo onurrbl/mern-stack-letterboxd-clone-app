@@ -34,3 +34,12 @@ export const useMovies = () => {
     dispatch,
   }
 }
+
+export const useReviews = () => {
+  const dispatch = useAppDispatch()
+  const { reviews, loading, error, submitLoading, submitError } = useAppSelector(
+    (state) => state.reviews
+  )
+
+  return { reviews, loading, error, submitLoading, submitError, dispatch }
+}

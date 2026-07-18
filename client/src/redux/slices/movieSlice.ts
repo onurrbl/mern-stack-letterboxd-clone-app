@@ -1,11 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-interface Review {
-  user: string
-  comment?: string
-  rating?: number
-}
-
 export interface Movie {
   _id: string
   title: string
@@ -14,7 +8,6 @@ export interface Movie {
   year?: number
   rating: number
   thumbnail?: string
-  reviews?: Review[]
 }
 
 interface MoviesState {

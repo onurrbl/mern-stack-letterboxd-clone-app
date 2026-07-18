@@ -11,10 +11,10 @@
 - [x] Connect `/movie/:id` page to movie detail data
 - [x] Add review backend model and review routes
 - [x] Add rating backend support
-- [ ] Add frontend review/rating flow on DetailedMovie
+- [x] Add frontend review/rating flow on DetailedMovie
 - [ ] Add like/favorite support
 - [ ] Improve UI, loading states, and error handling
 
 ## Immediate next move
 
-1. Add frontend review/rating flow on DetailedMovie
+1. Add like/favorite support
