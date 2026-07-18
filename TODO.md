@@ -9,12 +9,12 @@
 - [x] Add frontend movies Redux slice
 - [x] Connect home page to movie data
 - [x] Connect `/movie/:id` page to movie detail data
-- [ ] Add review backend model and review routes
-- [ ] Add rating backend support
+- [x] Add review backend model and review routes
+- [x] Add rating backend support
 - [ ] Add frontend review/rating flow on DetailedMovie
 - [ ] Add like/favorite support
 - [ ] Improve UI, loading states, and error handling
 
 ## Immediate next move
 
-1. Add review backend model and review routes
+1. Add frontend review/rating flow on DetailedMovie

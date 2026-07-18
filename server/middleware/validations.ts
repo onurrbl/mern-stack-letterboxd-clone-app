@@ -89,3 +89,24 @@ export const reviewMovieValidation = [
     .isLength({ max: 1000 })
     .withMessage('comment must be at most 1000 characters long'),
 ]
+
+export const createReviewValidation = [
+  body('movie')
+    .exists()
+    .withMessage('movie is required')
+    .isMongoId()
+    .withMessage('movie must be a valid id'),
+  ...reviewMovieValidation,
+]
+
+export const updateReviewValidation = [
+  body('rating')
+    .optional()
+    .isFloat({ min: 0, max: 5 })
+    .withMessage('rating must be between 0 and 5'),
+  body('comment')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 1000 })
+    .withMessage('comment must be at most 1000 characters long'),
+]

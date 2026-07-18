@@ -62,48 +62,6 @@ const addMovieToFavorite = asyncHandler(async (req: AuthRequest, res: Response) 
 })
 
 // access private
-// require auth
-const reviewMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    const result = errors.array({ onlyFirstError: true })
-    res.status(422)
-    throw new Error(result[0].msg)
-  }
-
-  const { comment, rating } = req.body
-  const movieId = req.params.id
-
-  const movie = await Movie.findById(movieId)
-  if (!movie) {
-    res.status(400)
-    throw new Error('There is no movie with this id')
-  }
-
-  const review = {
-    user: req.user!._id,
-    comment,
-    rating,
-  }
-
-  movie.reviews.push(review)
-  movie.rating =
-    movie.reviews.reduce((sum, review) => sum + (review.rating ?? 0), 0) / movie.reviews.length
-
-  await movie.save()
-
-  res.status(201).json({
-    id: movie._id,
-    title: movie.title,
-    description: movie.description,
-    categories: movie.categories,
-    year: movie.year,
-    rating: movie.rating,
-    reviews: movie.reviews,
-  })
-})
-
-// access private
 // admin only
 const addMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
   const errors = validationResult(req)
@@ -139,4 +97,4 @@ const addMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
   })
 })
 
-export { addMovie, getMovies, getMovieById, addMovieToFavorite, reviewMovie }
+export { addMovie, getMovies, getMovieById, addMovieToFavorite }

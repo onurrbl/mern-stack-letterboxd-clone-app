@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { errorHandler } from './middleware/errorMiddleware'
 import movieRoutes from './routes/movieRoutes'
+import reviewRoutes from './routes/reviewRoutes'
 import userRoutes from './routes/userRoutes'
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/users', userRoutes)
 app.use('/api/movies', movieRoutes)
+app.use('/api/reviews', reviewRoutes)
 
 app.use(errorHandler)
 
