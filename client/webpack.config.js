@@ -1,10 +1,13 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const BundleAnalyzerPlugin =
 // require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const API_URL = process.env.API_URL || 'http://localhost:5001'
+
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: { bundle: path.resolve(__dirname, 'src/index.tsx') },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -54,6 +57,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify(API_URL),
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),

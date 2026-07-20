@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { moviesApi } from '../../config/api'
 
 export interface Movie {
   _id: string
@@ -28,11 +29,9 @@ const initialState: MoviesState = {
   detailError: null,
 }
 
-const API_BASE = 'http://localhost:5001/api/movies'
-
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch(API_BASE)
+    const response = await fetch(moviesApi)
     const data = await response.json()
     if (!response.ok) {
       return rejectWithValue(data.message || 'Failed to load movies')
@@ -47,7 +46,7 @@ export const fetchMovieById = createAsyncThunk(
   'movies/fetchMovieById',
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_BASE}/${id}`)
+      const response = await fetch(`${moviesApi}/${id}`)
       const data = await response.json()
       if (!response.ok) {
         return rejectWithValue(data.message || 'Failed to load movie')

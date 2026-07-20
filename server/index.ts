@@ -11,11 +11,17 @@ dotenv.config()
 
 const port = process.env.PORT || '5001'
 
+const defaultOrigins = ['http://localhost:3001']
+const clientOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((origin) => origin.trim())
+  : []
+const allowedOrigins = [...new Set([...defaultOrigins, ...clientOrigins])]
+
 const app = express()
 
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: allowedOrigins,
   })
 )
 app.use(express.json())
@@ -37,6 +43,7 @@ mongoose
   .then(() => {
     app.listen(Number(port), () => {
       console.log(`Server running on port ${port}`)
+      console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`)
       console.log('MongoDB connected')
     })
   })

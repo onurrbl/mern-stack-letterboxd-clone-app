@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
+import { reviewsApi } from '../../config/api'
 
 export interface ReviewUser {
   _id: string
@@ -32,8 +33,6 @@ const initialState: ReviewsState = {
   submitError: null,
 }
 
-const API_BASE = 'http://localhost:5001/api/reviews'
-
 const authHeaders = (token: string) => ({
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -43,7 +42,7 @@ export const fetchReviewsByMovie = createAsyncThunk(
   'reviews/fetchReviewsByMovie',
   async (movieId: string, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_BASE}/movie/${movieId}`)
+      const response = await fetch(`${reviewsApi}/movie/${movieId}`)
       const data = await response.json()
       if (!response.ok) {
         return rejectWithValue(data.message || 'Failed to load reviews')
@@ -67,7 +66,7 @@ export const createReview = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(API_BASE, {
+      const response = await fetch(reviewsApi, {
         method: 'POST',
         headers: authHeaders(token),
         body: JSON.stringify({ movie, rating, comment }),
@@ -95,7 +94,7 @@ export const updateReview = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(`${API_BASE}/${id}`, {
+      const response = await fetch(`${reviewsApi}/${id}`, {
         method: 'PUT',
         headers: authHeaders(token),
         body: JSON.stringify({ rating, comment }),

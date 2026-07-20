@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { Movie } from './movieSlice'
 import { logout } from './authSlice'
+import { moviesApi, usersApi } from '../../config/api'
 
 interface FavoritesState {
   favoriteIds: string[]
@@ -19,9 +20,6 @@ const initialState: FavoritesState = {
   error: null,
 }
 
-const MOVIES_API = 'http://localhost:5001/api/movies'
-const USERS_API = 'http://localhost:5001/api/users'
-
 const authHeaders = (token: string) => ({
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -36,7 +34,7 @@ export const fetchFavorites = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(`${USERS_API}/me/favorites`, {
+      const response = await fetch(`${usersApi}/me/favorites`, {
         headers: authHeaders(token),
       })
       const data = await response.json()
@@ -62,7 +60,7 @@ export const toggleFavorite = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(`${MOVIES_API}/${movieId}/favorite`, {
+      const response = await fetch(`${moviesApi}/${movieId}/favorite`, {
         method: 'POST',
         headers: authHeaders(token),
       })

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { usersApi } from '../../config/api'
 
 interface User {
   _id: string
@@ -45,8 +46,6 @@ const initialState: AuthState = {
   initialized: false,
 }
 
-const API_BASE = 'http://localhost:5001/api/users'
-
 // Async thunks
 export const signup = createAsyncThunk(
   'auth/signup',
@@ -55,7 +54,7 @@ export const signup = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await fetch(`${API_BASE}`, {
+      const response = await fetch(`${usersApi}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
@@ -81,7 +80,7 @@ export const login = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await fetch(`${API_BASE}/login`, {
+      const response = await fetch(`${usersApi}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
