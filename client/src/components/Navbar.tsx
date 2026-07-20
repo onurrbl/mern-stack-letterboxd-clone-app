@@ -16,23 +16,28 @@ const Navbar: FC = () => {
   return (
     <header className='navbar'>
       <Link to='/' className='navbar__brand'>
-        Movie App
+        <span className='navbar__logo-dots' aria-hidden='true'>
+          <span />
+          <span />
+          <span />
+        </span>
+        <span className='navbar__brand-text'>filmlog</span>
       </Link>
 
       <nav className='navbar__links' aria-label='Primary navigation'>
-        <Link to='/'>Home</Link>
+        <Link to='/'>Films</Link>
         {isAuthenticated ? (
           <>
             <Link to='/profile'>Profile</Link>
             <span className='navbar__user'>{user?.name}</span>
-            <button onClick={handleLogout} className='navbar__logout'>
-              Logout
+            <button onClick={handleLogout} className='navbar__logout' type='button'>
+              Sign out
             </button>
           </>
         ) : (
           <>
-            <Link to='/login'>Login</Link>
-            <Link to='/signup'>Sign Up</Link>
+            <Link to='/login'>Sign in</Link>
+            <Link to='/signup'>Create account</Link>
           </>
         )}
       </nav>

@@ -11,6 +11,8 @@ import {
   clearSubmitError,
   type Review,
 } from '../redux/slices/reviewSlice'
+import StarRating from './ui/StarRating'
+import StatusMessage from './ui/StatusMessage'
 
 interface ReviewSectionProps {
   movieId: string
@@ -92,7 +94,7 @@ const ReviewSection: FC<ReviewSectionProps> = ({ movieId }) => {
           </div>
 
           <div className='review-form__field'>
-            <label htmlFor='comment'>Comment</label>
+            <label htmlFor='comment'>Review</label>
             <textarea
               id='comment'
               value={comment}
@@ -105,17 +107,26 @@ const ReviewSection: FC<ReviewSectionProps> = ({ movieId }) => {
           {submitError && <p className='review-form__error'>{submitError}</p>}
 
           <button type='submit' disabled={submitLoading} className='review-form__submit'>
-            {submitLoading ? 'Saving...' : userReview ? 'Update review' : 'Submit review'}
+            {submitLoading ? 'Saving...' : userReview ? 'Update review' : 'Post review'}
           </button>
         </form>
       ) : (
         <p className='reviews-section__login-prompt'>
-          <Link to='/login'>Log in</Link> to rate and review this movie.
+          <Link to='/login'>Sign in</Link> to rate and review this film.
         </p>
       )}
 
-      {loading && <p className='reviews-section__status'>Loading reviews...</p>}
-      {error && <p className='reviews-section__error'>{error}</p>}
+      {loading && (
+        <StatusMessage variant='dark' loading loadingLabel='Loading reviews...' />
+      )}
+
+      {error && !loading && (
+        <StatusMessage
+          variant='dark'
+          error={error}
+          onRetry={() => dispatch(fetchReviewsByMovie(movieId))}
+        />
+      )}
 
       {!loading && !error && (
         <ul className='reviews-list'>
@@ -126,7 +137,7 @@ const ReviewSection: FC<ReviewSectionProps> = ({ movieId }) => {
               <li key={review._id} className='reviews-list__item'>
                 <div className='reviews-list__header'>
                   <strong>{getReviewUserName(review)}</strong>
-                  <span>{review.rating.toFixed(1)} ★</span>
+                  <StarRating rating={review.rating} size='sm' showValue={false} />
                 </div>
                 {review.comment && <p className='reviews-list__comment'>{review.comment}</p>}
               </li>

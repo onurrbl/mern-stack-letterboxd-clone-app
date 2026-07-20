@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../redux/hooks'
+import Spinner from './ui/Spinner'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -11,11 +12,11 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation()
 
   if (!initialized || loading) {
-    return <div className="loading-screen">Loading...</div>
+    return <Spinner label='Checking session...' />
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />
+    return <Navigate to='/login' replace state={{ from: location.pathname }} />
   }
 
   return <>{children}</>

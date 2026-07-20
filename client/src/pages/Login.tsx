@@ -1,9 +1,10 @@
 import type { FC } from 'react'
-import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAuth } from '../redux/hooks'
-import { login } from '../redux/slices/authSlice'
+import { login, clearError } from '../redux/slices/authSlice'
 import '../styles/Auth.css'
+import '../styles/Navbar.css'
 
 const Login: FC = () => {
   const [email, setEmail] = useState('')
@@ -16,55 +17,70 @@ const Login: FC = () => {
   const from = (location.state as { from?: string } | null)?.from
   const redirectTo = from && from !== '/login' ? from : '/'
 
+  useEffect(() => {
+    dispatch(clearError())
+    return () => {
+      dispatch(clearError())
+    }
+  }, [dispatch])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLocalError('')
 
-    try {
-      const result = await dispatch(login({ email, password }))
-      if (result.meta.requestStatus === 'fulfilled') {
-        navigate(redirectTo, { replace: true })
-      }
-    } catch (err) {
-      setLocalError((err as Error).message)
+    const result = await dispatch(login({ email, password }))
+    if (result.meta.requestStatus === 'fulfilled') {
+      navigate(redirectTo, { replace: true })
     }
   }
 
+  const displayError = localError || error
+
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1>Login</h1>
-        {(error || localError) && <div className="auth-error">{error || localError}</div>}
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+    <main className='auth-page'>
+      <div className='auth-card'>
+        <Link to='/' className='auth-card__brand'>
+          <span className='navbar__logo-dots' aria-hidden='true'>
+            <span />
+            <span />
+            <span />
+          </span>
+          filmlog
+        </Link>
+        <h1>Sign in</h1>
+        {displayError && <div className='alert alert--error'>{displayError}</div>}
+        <form onSubmit={handleSubmit} className='auth-form'>
+          <div className='form-group'>
+            <label htmlFor='email'>Email</label>
             <input
-              type="email"
-              id="email"
+              type='email'
+              id='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete='email'
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className='form-group'>
+            <label htmlFor='password'>Password</label>
             <input
-              type="password"
-              id="password"
+              type='password'
+              id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete='current-password'
             />
           </div>
-          <button type="submit" disabled={loading} className="auth-button">
-            {loading ? 'Logging in...' : 'Login'}
+          <button type='submit' disabled={loading} className='auth-button'>
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-        <p className="auth-link">
-          Don't have an account? <a href="/signup">Sign up</a>
+        <p className='auth-link'>
+          New here? <Link to='/signup'>Create an account</Link>
         </p>
       </div>
-    </div>
+    </main>
   )
 }
 

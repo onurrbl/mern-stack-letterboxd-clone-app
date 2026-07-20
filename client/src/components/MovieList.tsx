@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { useMovies } from '../redux/hooks'
 import { fetchMovies, clearListError } from '../redux/slices/movieSlice'
 import MovieItem from './MovieItem'
+import StatusMessage from './ui/StatusMessage'
+import MovieGridSkeleton from './ui/MovieGridSkeleton'
 import '../styles/MovieList.css'
 
 const MovieList: FC = () => {
@@ -17,26 +19,29 @@ const MovieList: FC = () => {
   }, [dispatch])
 
   if (listLoading) {
-    return <div className='movie-list__status'>Loading movies...</div>
+    return <MovieGridSkeleton count={12} />
   }
 
   if (listError) {
     return (
-      <div className='movie-list__status movie-list__status--error'>
-        <p>{listError}</p>
-        <button type='button' onClick={() => dispatch(fetchMovies())}>
-          Try again
-        </button>
-      </div>
+      <StatusMessage
+        error={listError}
+        onRetry={() => dispatch(fetchMovies())}
+      />
     )
   }
 
   if (!movies.length) {
-    return <div className='movie-list__status'>No movies available yet.</div>
+    return (
+      <StatusMessage
+        empty
+        emptyMessage='No films in the catalog yet.'
+      />
+    )
   }
 
   return (
-    <section className='movie-list__body'>
+    <section className='movie-list__body' aria-label='Film grid'>
       {movies.map((movie) => (
         <MovieItem key={movie._id} movie={movie} />
       ))}

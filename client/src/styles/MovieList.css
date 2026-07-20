@@ -1,42 +1,19 @@
 .movie-list__body {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
   width: 100%;
 }
 
-.movie-list__status {
-  padding: 2rem;
-  text-align: center;
-  background: #fff;
-  border-radius: 8px;
-  color: #4b5563;
-}
-
-.movie-list__status--error p {
-  margin-bottom: 1rem;
-  color: #b91c1c;
-}
-
-.movie-list__status button {
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #2e2ea0;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .movie-list__body {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 1024px) {
   .movie-list__body {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   }
 }

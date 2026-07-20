@@ -13,8 +13,8 @@
 - [x] Add rating backend support
 - [x] Add frontend review/rating flow on DetailedMovie
 - [x] Add like/favorite support
-- [ ] Improve UI, loading states, and error handling
+- [x] Improve UI, loading states, and error handling
 
 ## Immediate next move
 
-1. Improve UI, loading states, and error handling
+All core features complete. Consider polish: search, watchlists, or user avatars.

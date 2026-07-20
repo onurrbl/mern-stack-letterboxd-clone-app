@@ -1,60 +1,105 @@
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #2e2ea0;
-  background: #1f2937;
-  color: #f9fafb;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  height: var(--lb-nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  background: var(--lb-bg-dark);
+  border-bottom: 1px solid #1a2026;
 }
 
 .navbar__brand {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #f9fafb;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
+  color: var(--lb-text-on-dark-bright);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.navbar__brand:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.navbar__logo-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.navbar__logo-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lb-green);
+}
+
+.navbar__logo-dots span:nth-child(2) {
+  background: #40bcf4;
+}
+
+.navbar__logo-dots span:nth-child(3) {
+  background: #ff8000;
+}
+
+.navbar__brand-text {
+  text-transform: lowercase;
 }
 
 .navbar__links {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .navbar__links a {
-  color: #d1d5db;
+  padding: 0.4rem 0.65rem;
+  color: var(--lb-text-on-dark);
   text-decoration: none;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--lb-radius);
 }
 
 .navbar__links a:hover {
-  color: #ffffff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
 }
 
 .navbar__user {
-  color: #fbbf24;
+  padding: 0.35rem 0.65rem;
+  color: var(--lb-green);
+  font-size: 0.875rem;
   font-weight: 600;
-  display: flex;
-  align-items: center;
 }
 
 .navbar__logout {
-  padding: 6px 16px;
-  background: #dc2626;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  color: var(--lb-text-on-dark);
+  border: 1px solid var(--lb-border);
+  border-radius: var(--lb-radius);
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .navbar__logout:hover {
-  background: #b91c1c;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .navbar__user {
+    display: none;
+  }
 }

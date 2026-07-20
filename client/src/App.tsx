@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import DetailedMovie from './pages/DetailedMovie'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import Profile from './pages/Profile'
 import { Provider } from 'react-redux'
@@ -19,7 +20,9 @@ const Layout: FC = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className='app-main'>
+        <Outlet />
+      </div>
     </>
   )
 }
@@ -48,19 +51,21 @@ const AppRoutes: FC = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
-        <Route 
-          path='/profile' 
+        <Route
+          path='/profile'
           element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
-          } 
+          }
         />
 
         <Route path='/movie' element={<MovieLayout />}>
           <Route index element={<Home />} />
           <Route path=':id' element={<DetailedMovie />} />
         </Route>
+
+        <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
   )

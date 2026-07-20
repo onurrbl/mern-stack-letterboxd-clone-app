@@ -1,33 +1,47 @@
 import type { FC } from 'react'
-import { useAuth, useFavorites } from '../redux/hooks'
+import { Link } from 'react-router-dom'
+import { useAuth, useAppDispatch, useFavorites } from '../redux/hooks'
+import { fetchFavorites } from '../redux/slices/favoriteSlice'
 import MovieItem from '../components/MovieItem'
+import StatusMessage from '../components/ui/StatusMessage'
+import MovieGridSkeleton from '../components/ui/MovieGridSkeleton'
 import '../styles/Profile.css'
 
 const Profile: FC = () => {
   const { user } = useAuth()
+  const dispatch = useAppDispatch()
   const { favoriteMovies, loading, error } = useFavorites()
 
   return (
-    <div className='profile-page page-container'>
-      <h1>Profile</h1>
-      {user && (
-        <div className='profile-details'>
-          <p>
-            <strong>Name:</strong> {user.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-        </div>
-      )}
+    <main className='profile-page'>
+      <header className='page-heading'>
+        <h1>{user?.name || 'Profile'}</h1>
+        {user && <p>{user.email}</p>}
+      </header>
 
       <section className='profile-favorites'>
-        <h2>Liked Movies</h2>
-        {loading && <p className='profile-favorites__status'>Loading liked movies...</p>}
-        {error && <p className='profile-favorites__error'>{error}</p>}
-        {!loading && !error && favoriteMovies.length === 0 && (
-          <p className='profile-favorites__status'>You have not liked any movies yet.</p>
+        <h2>Liked films</h2>
+
+        {loading && <MovieGridSkeleton count={6} />}
+
+        {error && !loading && (
+          <StatusMessage
+            error={error}
+            onRetry={() => dispatch(fetchFavorites())}
+          />
         )}
+
+        {!loading && !error && favoriteMovies.length === 0 && (
+          <StatusMessage
+            empty
+            emptyMessage='You have not liked any films yet.'
+          >
+            <Link to='/' className='btn btn--primary'>
+              Browse films
+            </Link>
+          </StatusMessage>
+        )}
+
         {!loading && !error && favoriteMovies.length > 0 && (
           <div className='profile-favorites__grid'>
             {favoriteMovies.map((movie) => (
@@ -36,7 +50,7 @@ const Profile: FC = () => {
           </div>
         )}
       </section>
-    </div>
+    </main>
   )
 }
 

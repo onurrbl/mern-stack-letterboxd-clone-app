@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth, useAppDispatch, useFavorites } from '../redux/hooks'
-import { toggleFavorite } from '../redux/slices/favoriteSlice'
+import { toggleFavorite, clearFavoritesError } from '../redux/slices/favoriteSlice'
 import type { Movie } from '../redux/slices/movieSlice'
 import '../styles/FavoriteButton.css'
 
@@ -19,12 +19,13 @@ const FavoriteButton: FC<FavoriteButtonProps> = ({ movie }) => {
   if (!isAuthenticated) {
     return (
       <p className='favorite-button__prompt'>
-        <Link to='/login'>Log in</Link> to like this movie.
+        <Link to='/login'>Sign in</Link> to like this film.
       </p>
     )
   }
 
   const handleToggle = () => {
+    dispatch(clearFavoritesError())
     dispatch(toggleFavorite({ movieId: movie._id, movie }))
   }
 

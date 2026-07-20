@@ -1,28 +1,34 @@
-.profile-page h1 {
-  margin-bottom: 1rem;
+.profile-page {
+  max-width: var(--lb-max-width);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
 }
 
-.profile-details {
-  margin-bottom: 2rem;
-  display: grid;
-  gap: 0.5rem;
+.profile-page h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
 }
 
 .profile-favorites h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lb-text-muted);
   margin-bottom: 1rem;
-  color: #1f2937;
-}
-
-.profile-favorites__status {
-  color: #6b7280;
-}
-
-.profile-favorites__error {
-  color: #b91c1c;
 }
 
 .profile-favorites__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .profile-favorites__grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+  }
 }
