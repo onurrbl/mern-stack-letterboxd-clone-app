@@ -33,7 +33,7 @@ const getMovieById = asyncHandler(async (req: Request, res: Response) => {
 
 // access private
 // require auth
-const addMovieToFavorite = asyncHandler(async (req: AuthRequest, res: Response) => {
+const toggleMovieFavorite = asyncHandler(async (req: AuthRequest, res: Response) => {
   const movieId = req.params.id
 
   const user = await User.findById(req.user?._id)
@@ -44,19 +44,28 @@ const addMovieToFavorite = asyncHandler(async (req: AuthRequest, res: Response) 
 
   const movie = await Movie.findById(movieId)
   if (!movie) {
-    res.status(400)
-    throw new Error('Invalid movie data')
+    res.status(404)
+    throw new Error('Movie not found')
   }
 
-  if (!user.favoriteMovies.includes(movie._id)) {
+  const favoriteIndex = user.favoriteMovies.findIndex(
+    (favoriteId) => favoriteId.toString() === movieId
+  )
+
+  let isFavorite: boolean
+  if (favoriteIndex >= 0) {
+    user.favoriteMovies.splice(favoriteIndex, 1)
+    isFavorite = false
+  } else {
     user.favoriteMovies.push(movie._id)
-    await user.save()
+    isFavorite = true
   }
 
-  res.status(201).json({
-    id: user._id,
-    name: user.name,
-    email: user.email,
+  await user.save()
+
+  res.json({
+    movieId,
+    isFavorite,
     favoriteMovies: user.favoriteMovies,
   })
 })
@@ -97,4 +106,4 @@ const addMovie = asyncHandler(async (req: AuthRequest, res: Response) => {
   })
 })
 
-export { addMovie, getMovies, getMovieById, addMovieToFavorite }
+export { addMovie, getMovies, getMovieById, toggleMovieFavorite }

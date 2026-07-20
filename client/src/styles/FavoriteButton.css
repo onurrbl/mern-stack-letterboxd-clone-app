@@ -1,0 +1,42 @@
+.favorite-button {
+  margin-top: 1rem;
+}
+
+.favorite-button__prompt {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.favorite-button__prompt a {
+  color: #2e2ea0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.favorite-button__action {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2e2ea0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.favorite-button__action--active {
+  background: #b91c1c;
+}
+
+.favorite-button__action:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.favorite-button__error {
+  margin-top: 0.75rem;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}

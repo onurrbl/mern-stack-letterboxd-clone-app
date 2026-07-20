@@ -12,9 +12,9 @@
 - [x] Add review backend model and review routes
 - [x] Add rating backend support
 - [x] Add frontend review/rating flow on DetailedMovie
-- [ ] Add like/favorite support
+- [x] Add like/favorite support
 - [ ] Improve UI, loading states, and error handling
 
 ## Immediate next move
 
-1. Add like/favorite support
+1. Improve UI, loading states, and error handling

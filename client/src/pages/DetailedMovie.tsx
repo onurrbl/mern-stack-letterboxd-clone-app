@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useMovies } from '../redux/hooks'
 import { fetchMovieById, clearSelectedMovie, clearDetailError } from '../redux/slices/movieSlice'
 import ReviewSection from '../components/ReviewSection'
+import FavoriteButton from '../components/FavoriteButton'
 import '../styles/DetailedMovie.css'
 
 const DetailedMovie: FC = () => {
@@ -105,6 +106,7 @@ const DetailedMovie: FC = () => {
 
         <div className='movie__end'>
           <div className='movie-ratings'>Rating: {selectedMovie.rating.toFixed(1)}</div>
+          <FavoriteButton movie={selectedMovie} />
         </div>
       </div>
 

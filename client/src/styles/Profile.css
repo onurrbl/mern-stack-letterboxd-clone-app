@@ -1,0 +1,28 @@
+.profile-page h1 {
+  margin-bottom: 1rem;
+}
+
+.profile-details {
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.profile-favorites h2 {
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.profile-favorites__status {
+  color: #6b7280;
+}
+
+.profile-favorites__error {
+  color: #b91c1c;
+}
+
+.profile-favorites__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}

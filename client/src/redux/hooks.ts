@@ -43,3 +43,12 @@ export const useReviews = () => {
 
   return { reviews, loading, error, submitLoading, submitError, dispatch }
 }
+
+export const useFavorites = () => {
+  const dispatch = useAppDispatch()
+  const { favoriteIds, favoriteMovies, loading, toggleLoading, error } = useAppSelector(
+    (state) => state.favorites
+  )
+
+  return { favoriteIds, favoriteMovies, loading, toggleLoading, error, dispatch }
+}

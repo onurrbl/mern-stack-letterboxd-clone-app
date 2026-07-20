@@ -87,6 +87,17 @@ const getMe = asyncHandler(async (req: AuthRequest, res: Response) => {
   res.status(200).json(req.user)
 })
 
+const getFavoriteMovies = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const user = await User.findById(req.user?._id).populate('favoriteMovies')
+
+  if (!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  res.status(200).json(user.favoriteMovies)
+})
+
 // Generate Token
 const generateToken = (id: string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || '', {
@@ -94,4 +105,4 @@ const generateToken = (id: string) => {
   })
 }
 
-export { registerUser, loginUser, getMe }
+export { registerUser, loginUser, getMe, getFavoriteMovies }

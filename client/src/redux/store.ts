@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/authSlice'
 import movieReducer from './slices/movieSlice'
+import favoriteReducer from './slices/favoriteSlice'
 import reviewReducer from './slices/reviewSlice'
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     auth: authReducer,
     movies: movieReducer,
     reviews: reviewReducer,
+    favorites: favoriteReducer,
   },
 })
 

@@ -5,7 +5,7 @@ import {
   addMovie,
   getMovies,
   getMovieById,
-  addMovieToFavorite,
+  toggleMovieFavorite,
 } from '../controllers/movieController'
 
 const router = express.Router()
@@ -14,6 +14,6 @@ const router = express.Router()
 router.get('/', getMovies)
 router.get('/:id', getMovieById)
 router.post('/', requireAuth, requireAdmin, createMovieValidation, addMovie)
-router.post('/:id/favorite', requireAuth, addMovieToFavorite)
+router.post('/:id/favorite', requireAuth, toggleMovieFavorite)
 
 export default router
